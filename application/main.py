@@ -21,9 +21,6 @@ from .database.dependencies import get_session, get_session_override
 from .api import api_router
 
 # -- APPLICATION --------------------------------------------------------------
-global_thread_lock = multiprocessing.Lock()
-
-# -- APPLICATION --------------------------------------------------------------
 disable_auto_docs = dict(docs_url=None, redoc_url=None) if settings.PRODUCTION else {}
 app = FastAPI(
     root_path=settings.ROOT_PATH,
