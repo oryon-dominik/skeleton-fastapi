@@ -16,7 +16,6 @@ from .config import logging as logging_config  # noqa, keep this unsued import t
 
 from .common.exceptions import UnknownTeapotException
 from .common.dependencies import block_request_when_in_production
-from .database.dependencies import get_session, get_session_override
 
 from .api import api_router
 
@@ -93,9 +92,6 @@ async def show_settings_info(
     """debug-settings-info"""
     return {"settings": settings.dict()} if allowed else {"message": "You are not allowed to see this."}
 
-# override database when in testing-mode
-if settings.TESTING:
-    app.dependency_overrides[get_session] = get_session_override
 
 # -----------------------------------------------------------------------------
 log.info(

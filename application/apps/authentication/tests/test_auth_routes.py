@@ -2,9 +2,10 @@ import pytest
 import httpx
 
 from fastapi.testclient import TestClient
+from sqlmodel import SQLModel
 
 from ....main import app
-from ....database.dependencies import get_session_override
+from ....database.dependencies import get_session, ENGINE
 
 from ..cryptography import verify_password
 
@@ -36,7 +37,8 @@ class TestAuthentication:
 
     @pytest.fixture(name="session", scope="class")
     def session_fixture(self):
-        return next(get_session_override())
+        SQLModel.metadata.create_all(ENGINE)
+        return next(get_session())
 
     @pytest.fixture(name="mock_users")
     def mock_users(self, session):

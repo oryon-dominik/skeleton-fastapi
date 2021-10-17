@@ -1,6 +1,8 @@
 import pytest
 
-from ....database.dependencies import get_session_override
+from sqlmodel import SQLModel
+
+from ....database.dependencies import get_session, ENGINE
 
 from ..cryptography import verify_password
 from ..models import UserCreate, UserUpdate
@@ -12,7 +14,8 @@ class TestUserCRUD:
 
     @pytest.fixture(name="session", scope="class")
     def session_fixture(self):
-        return next(get_session_override())
+        SQLModel.metadata.create_all(ENGINE)
+        return next(get_session())
 
     @pytest.fixture(name="clean_db")
     def clean_db(self, session):
