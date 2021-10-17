@@ -1,0 +1,197 @@
+{
+    "folders": [
+        {
+            "name": "fastapi-skeleton",
+            "path": "."
+        },
+    ],
+    "extensions": {
+        "recommendations": [
+            // python extensions
+            "ms-python.vscode-pylance",
+            "ms-python.python",
+            "kevinrose.vsc-python-indent",
+            "littlefoxteam.vscode-python-test-adapter",
+            "ms-toolsai.jupyter",
+
+            // linting for our CI/CD-chain quality-checks
+            "sonarsource.sonarlint-vscode",
+            "usernamehw.errorlens",
+
+            // syntax highlight
+            "mikestead.DotENV",
+
+            // database-tools
+            "ckolkman.vscode-postgres",
+            "alexcvzz.vscode-sqlite",
+
+            // git extensions
+            "mhutchie.git-graph",
+            "eamodio.gitlens",
+            "srmeyers.git-prefix",
+
+            // live-share for homeoffice collaboration (sign in with personal-github)
+            "ms-vsliveshare.vsliveshare",
+            "lostintangent.vsls-whiteboard",
+
+            // useful tools for working collaboratively
+            "gruntfuggly.todo-tree",
+            "vsls-contrib.codetour",
+            "adpyke.codesnap",
+            "hediet.vscode-drawio",
+
+            // little coding helpers
+            "aaron-bond.better-comments",
+            "stkb.rewrap",
+        ]
+    },
+    "settings": {
+        // * files ////////////////////////////////////////////////////////////
+        "files.autoSave": "onFocusChange",
+        "files.eol": "\n",
+        "files.exclude": {
+            "**/__pycache__": true,
+            "**/_pytest": true,
+            "**/*.egg-info": true,
+            "**/*.dist-info": true,
+            "**/.pytest_cache": true,
+            "**/.ipynb_checkpoints/": true,
+            "**/.ipython": true,
+            ".vscode/": true,
+            ".VSCodeCounter/": true,
+            "**/node_modules/": true,
+        },
+        "files.associations": {
+            "**/*.html": "html",
+            "**/requirements{/**,*}.{txt,in}": "pip-requirements",
+            "*.js": "javascript"
+        },
+        // * python ///////////////////////////////////////////////////////////
+        "python.envFile": "${workspaceFolder}/.env",
+        "python.terminal.activateEnvironment": true,
+        // black-settings
+        "python.formatting.provider": "black",
+        "python.formatting.blackArgs": ["--line-length", "119"],
+        // testing-settings
+        "python.testing.cwd": "${workspaceFolder:fastapi-skeleton}/",
+        "python.testing.unittestEnabled": false,
+        "python.testing.nosetestsEnabled": false,
+        "python.testing.pytestEnabled": true,
+        // "python.testing.pytestArgs": [
+        // ],
+        "python.testing.autoTestDiscoverOnSaveEnabled": false,
+
+        // to support fast loading in the editor
+        "python.analysis.extraPaths": ["."],
+
+        // * extension: gitlens ///////////////////////////////////////////////
+        "gitlens.currentLine.enabled": false,
+        "gitlens.hovers.currentLine.over": "line",
+        "gitlens.codeLens.recentChange.enabled": false,
+        "gitlens.codeLens.authors.enabled": false,
+        "gitlens.codeLens.enabled": false,
+        "gitlens.hovers.enabled": false,
+        "gitlens.statusBar.enabled": true,
+        "gitlens.statusBar.command": "gitlens.toggleFileBlame",
+        // "githd.blameView.enabled": true,
+
+        // * extension: errorlens /////////////////////////////////////////////
+        "errorLens.exclude": [
+            // "^\".*\" is not accessed$",
+            // "^\"self\" is not accessed$",
+            // "^\"cls\" is not accessed$",
+        ],
+        "errorLens.onSave": true,
+
+        // * extension: TODO-tree /////////////////////////////////////////////
+        "todo-tree.general.tags" :[
+            "TODO",
+            "FIXME",
+            "HACK",
+            "BUG",
+            "TBD",
+            "WTF",
+        ],
+        "todo-tree.highlights.customHighlight": {
+            "TODO": {
+                "type": "tag",
+                "foreground": "magenta",
+                "iconColour": "green",
+            },
+            "FIXME": {
+                "type": "tag",
+                "foreground": "magenta",
+                "icon": "alert",
+                "iconColour": "yellow",
+            },
+            "HACK": {
+                "type": "tag",
+                "icon": "flame",
+                "iconColour": "grey",
+            },
+            "BUG": {
+                "type": "text",
+                "foreground": "red",
+                "icon": "zap",
+                "iconColour": "red",
+            },
+            "TBD": {
+                "type": "tag",
+                "foreground": "magenta",
+                "icon": "organization",
+                "iconColour": "magenta",
+            },
+            "WTF": {
+                "type": "text",
+                "foreground": "orange",
+                "icon": "megaphone",
+                "iconColour": "orange",
+            }
+        },
+        // * extension: sqltools //////////////////////////////////////////////
+        "sqltools.useNodeRuntime": true,
+        "sqltools.connections": [
+            {
+                "name": "sqlite-fastapi-skeleton",
+                "driver": "SQLite",
+                "database": "./application/database/production.db",
+                "connectionTimeout": 15
+            },
+            {
+                "name": "test-sqlite-fastapi-skeleton",
+                "driver": "SQLite",
+                "database": ":memory:",
+            },
+        ],
+
+        // * extension: git-prefix ////////////////////////////////////////////
+        "gitPrefix.replacement": "SKELETON-",
+
+        // * launcher-config //////////////////////////////////////////////////
+        "launch": {
+            "version": "0.2.0",
+            "configurations": [
+                {
+                    "name": "Python Debugger: pytest",
+                    "type": "python",
+                    "request": "launch",
+                    "cwd": "${workspaceFolder:fastapi-skeleton}",
+                    "console": "integratedTerminal",
+                    "program": "<insert here: absolute path to pytest binary>",
+                    //     "args": [
+                    //         // "test",
+                    //     ],
+                    "envFile": "${workspaceFolder}/.envs/develop.env",
+                },
+                {
+                    "name": "Python WebApp: FASTAPI uvicorn",
+                    "type": "python",
+                    "request": "launch",
+                    "program": "${command:python.interpreterPath}",
+                    "gevent":true,
+                    "args" : ["-m", "uvicorn", "application.main:app", "--reload"]
+                },
+            ]
+        },
+    }
+}

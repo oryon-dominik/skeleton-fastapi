@@ -1,0 +1,37 @@
+# gitignoring things :)
+
+.envs/.secrets/
+.envs/production.env
+
+# the databases
+production.db
+develop.db
+
+# the production-build docs
+site/
+# the openapi.json should be freshly generated every build
+docs/openapi.json
+
+# the application log
+logs/application.log
+logs/events.log
+
+# ===================
+## Python
+# ===================
+
+# precompiled
+__pycache__/
+*.py[cod]
+.pytest_cache
+
+# coverage
+.coverage
+htmlcov/
+
+# jupyter
+.ipynb_checkpoints/
+.ipython/
+
+# vscode
+.vscode/

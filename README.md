@@ -5,19 +5,78 @@
 This project is heavily inspired by Sebastian Ramirez ([tiangolo](https://github.com/tiangolo)).  
 Using [Fast-API](https://fastapi.tiangolo.com/) (including [pydantic](https://pydantic-docs.helpmanual.io/)) and [SQLModel](https://sqlmodel.tiangolo.com/). As well as a [typer](https://typer.tiangolo.com/) CLI for the project managment commands.  
 
-## dependencies
+## Dependencies
 
 Dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproject.toml`.
 
-## swagger
 
-To generate pydantic models from any swagger.json use the [datamodel-code-generator](https://koxudaxi.github.io/datamodel-code-generator/).
+## Management Commands
+
+I'm using an easy management alias `cc` for all my projects. Easy control-commands for the project using the python library `typer` (trivia: I'm never aliasing `gcc` or any other c-compilers to `cc`). All available commands are defined in `commands.py`  
+
+Example:
+
+    python commands.py up
+    # after adding the alias will be executed as:
+    cc up
+
+For a full list of commands just run `commands.py --help` (`cc --help`) or glimpse into the file itself.  
+To implement the `cc <command>` alias with powershell:
+
+    function cc () {
+        $commands = ".\commands.py"
+        $cwd = (Get-Location)
+        $parent = Split-Path -Path $cwd
+        if (Test-Path $commands -PathType leaf) {
+            python commands.py $args
+        }
+        elseif (Test-Path (Join-Path -Path $parent -ChildPath $commands) -PathType leaf) {
+            Set-Location $parent
+            python commands.py $args
+            Set-Location $cwd
+        }
+        else {
+            Write-Host "commands.py not found" 
+        }
+    }
+
+
+## Setup
+
+Install dependencies.
+
+    poetry install
+
+Activate your newly created env. (however, you know how to do this on your python)  
+Create a fresh db (you have to redo this for dev-mode too!).
+
+    alembic upgrade head
+
+Migrate the database.
+
+    cc mmm
+
+Run the server.
+
+    cc up
+
+Lookup [Database migrations with alembic](#database-migrations-with-alembic) for more details.
+
+To enter develop-mode set an environment-variable.
+
+    # powershell
+    $Env:DEBUG_FASTAPI_SKELETON = $true
+
+
+## Models from swagger
+
+Pydantic imports generating models from any `swagger.json`: Use the [datamodel-code-generator](https://koxudaxi.github.io/datamodel-code-generator/).
 
     poetry add datamodel-code-generator
     datamodel-codegen --input swagger.json --input-file-type openapi --output model.py --target-python-version 3.10
 
 
-## documentation
+## Documentation
 
 This project uses [mkdocs.org](https://www.mkdocs.org) with [material theme](https://squidfunk.github.io/mkdocs-material/) for documentation.
 
@@ -26,7 +85,7 @@ This project uses [mkdocs.org](https://www.mkdocs.org) with [material theme](htt
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 
-To add the `openapi.json` to the docs download it from the FastAPI dev-server and save it to the docs directory.  
+To add an updated the `openapi.json` to the docs run `cc docs --openapi`.  
 
 Layout:
 
@@ -37,9 +96,13 @@ Layout:
         ...           # Other markdown pages, images and other files.
 
 
-## database migrations with alembic
+## Database migrations with alembic
 
-Following the [tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html).  
+To easily auto-register a model's (`YourModel(SQLModel, table=True)`) changes
+to the revision system, import all models that should be tracked to
+`application.database.revisions`.  
+
+Setup following the [tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html):  
 
 `env.py` - This is a Python script that is run whenever the alembic migration
 tool is invoked. At the very least, it contains instructions to configure and

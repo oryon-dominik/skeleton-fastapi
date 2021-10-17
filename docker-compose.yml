@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  fastapi: &fastapi
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile
+    volumes:
+      - .:/app:Z
+    restart: always
+    env_file:
+      - ./.envs/production.env
+    environment:
+      - DEBUG_FASTAPI_SKELETON=false
+    ports:
+      - "8000:8000"
+    command: /start.sh
+    container_name: skeleton_fastapi
+    networks:
+      - default
+
+
+networks:
+  default:
+    name: fastapiskeleton
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.10.42.0/24"
