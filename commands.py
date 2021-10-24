@@ -180,12 +180,12 @@ def mmm(message: str = "", revision: str = "head"):
 @cli.command()
 def up(port: int = 8000, host: str = "127.0.0.1", log_level: str = "info", reload: bool = True, docs: bool = False):
     """= run (start the devserver)"""
-    run (port=port, host=host, log_level=log_level, reload=reload, docs=docs)
+    run(port=port, host=host, log_level=log_level, reload=reload, docs=docs)
 
 @cli.command()
 def serve(port: int = 8000, host: str = "127.0.0.1", log_level: str = "info", reload: bool = True, docs: bool = False):
     """= run (start the devserver)"""
-    run (port=port, host=host, log_level=log_level, reload=reload, docs=docs)
+    run(port=port, host=host, log_level=log_level, reload=reload, docs=docs)
 
 
 # ---------- INTROSPECTION ----------------------------------------------------

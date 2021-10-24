@@ -44,12 +44,13 @@ RUN python -m pip install --upgrade --user pip
 
 # Install Poetry
 RUN apt-get update && apt-get install --no-install-recommends -y curl \
-    && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python - \
-    # cleaning up unused files
-    && apt-get purge --assume-yes --auto-remove --option APT::AutoRemove::RecommendsImportant=false \
-    && rm -rf /var/lib/apt/lists/*
+    && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
 RUN root/.local/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion
 ENV PATH=root/.local/bin/:$PATH
+
+# Cleaning up unused files
+RUN apt-get purge --assume-yes --auto-remove --option APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
