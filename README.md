@@ -12,33 +12,39 @@ Dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproje
 
 ## Management Commands
 
-I'm using an easy management alias `cc` for all my projects. Easy control-commands for the project using the python library `typer` (trivia: I'm never aliasing `gcc` or any other c-compilers to `cc`). All available commands are defined in `commands.py`  
+I'm aliasing `python commands.py` -> `cc` to *call* management *commands* in all my projects.  
+It's a CLI interface using the python library `typer`. All available commands are defined in `commands.py`  
+(Trivia: I'm never aliasing `gcc` or any other c-compilers to `cc`, so: no conflicts here).  
 
-Example:
+`cc up`: Start the application.  
+`cc readme`: Show this readme in your terminal.  
+`cc docs`: Serve, build, or delete your mkdocs.  
 
-    python commands.py up
-    # after adding the alias will be executed as:
-    cc up
+There are also some abbreviations available.
+`cc mmm`: _makemigrations_ & _migrate_.
 
-For a full list of commands just run `commands.py --help` (`cc --help`) or glimpse into the file itself.  
-To implement the `cc <command>` alias with powershell:
+Look up all other control-commands for the project via `cc --help` or glimpse into the `commands.py` yourself.  
 
-    function cc () {
-        $commands = ".\commands.py"
-        $cwd = (Get-Location)
-        $parent = Split-Path -Path $cwd
-        if (Test-Path $commands -PathType leaf) {
-            python commands.py $args
-        }
-        elseif (Test-Path (Join-Path -Path $parent -ChildPath $commands) -PathType leaf) {
-            Set-Location $parent
-            python commands.py $args
-            Set-Location $cwd
-        }
-        else {
-            Write-Host "commands.py not found" 
-        }
+Example implementation of the `cc <command>` alias in a `powershell` script:  
+
+```powershell
+function cc () {
+    $commands = ".\commands.py"
+    $cwd = (Get-Location)
+    $parent = Split-Path -Path $cwd
+    if (Test-Path $commands -PathType leaf) {
+        python commands.py $args
     }
+    elseif (Test-Path (Join-Path -Path $parent -ChildPath $commands) -PathType leaf) {
+        Set-Location $parent
+        python commands.py $args
+        Set-Location $cwd
+    }
+    else {
+        Write-Host "commands.py not found" 
+    }
+}
+```
 
 
 ## Setup
@@ -202,3 +208,9 @@ See: https://www.encode.io/databases/tests_and_migrations/
 or: https://alembic.sqlalchemy.org/en/latest/tutorial.html  
 and: https://alembic.sqlalchemy.org/en/latest/cookbook.html#don-t-generate-empty-migrations-with-autogenerate  
 
+
+## other skeletons
+
+[django minimal sqlite](https://github.com/oryon-dominik/skeleton-django-sqlite-minimal)  
+[django with postgres & docker](https://github.com/oryon-dominik/skeleton-django-postgres-docker)  
+[fastAPI](https://github.com/oryon-dominik/skeleton-fastapi) (this repo)  
