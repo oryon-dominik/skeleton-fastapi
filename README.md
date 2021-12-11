@@ -91,7 +91,7 @@ This project uses [mkdocs.org](https://www.mkdocs.org) with [material theme](htt
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 
-To add an updated the `openapi.json` to the docs run `cc docs --openapi`.  
+To add an updated `openapi.json` to the docs run `cc docs --openapi`.  
 
 Layout:
 
