@@ -6,6 +6,17 @@ from . import settings, ROOT_DIR
 logs_path = ROOT_DIR / "logs"
 logs_path.mkdir(exist_ok=True)
 
+# usally the log-levels could be described as follows:
+# 0: ERROR
+# 1: WARN
+# 2: NOTICE
+# 3: INFO
+# 4: TALKATIVE
+# 5: CHATTY
+# 6: DEBUG
+# 7: VOMIT
+
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
