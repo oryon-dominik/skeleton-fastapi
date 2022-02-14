@@ -2,12 +2,14 @@
 
 > Use this skeleton as a base for quick fast-api server application development.
 
+A little skeleton for a quick Fast-API setup including authentication (JWT via [python-jose](https://python-jose.readthedocs.io/en/latest/)), docs (with [mkdocs](https://www.mkdocs.org/)) and a database including a migrations system (using [alembic](https://alembic.sqlalchemy.org/en/latest/)).  
+
 This project is heavily inspired by Sebastian Ramirez ([tiangolo](https://github.com/tiangolo)).  
 Using [Fast-API](https://fastapi.tiangolo.com/) (including [pydantic](https://pydantic-docs.helpmanual.io/)) and [SQLModel](https://sqlmodel.tiangolo.com/). As well as a [typer](https://typer.tiangolo.com/) CLI for the project managment commands.  
 
 ## Dependencies
 
-Dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproject.toml`.
+Dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproject.toml`.  
 
 
 ## Management Commands
@@ -76,7 +78,7 @@ To enter develop-mode set an environment-variable.
 
 ## Models from swagger
 
-Pydantic imports generating models from any `swagger.json`: Use the [datamodel-code-generator](https://koxudaxi.github.io/datamodel-code-generator/).
+Pydantic imports generated models from any `swagger.json`: Use the [datamodel-code-generator](https://koxudaxi.github.io/datamodel-code-generator/).
 
     poetry add datamodel-code-generator
     datamodel-codegen --input swagger.json --input-file-type openapi --output model.py --target-python-version 3.10
@@ -104,9 +106,8 @@ Layout:
 
 ## Database migrations with alembic
 
-To easily auto-register a model's (`YourModel(SQLModel, table=True)`) changes
-to the revision system, import all models that should be tracked to
-`application.database.revisions`.  
+To easily auto-register a model that should have its changes tracked by alembics revision system (`YourModel(SQLModel, table=True)`), 
+all models inside any app in `apps` are automatically imported into `application.database.revisions`.  
 
 Setup following the [tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html):  
 
