@@ -4,12 +4,16 @@
 
 A little skeleton for a quick Fast-API setup including authentication (JWT via [python-jose](https://python-jose.readthedocs.io/en/latest/)), docs (with [mkdocs](https://www.mkdocs.org/)) and a database including a migrations system (using [alembic](https://alembic.sqlalchemy.org/en/latest/)).  
 
-This project is heavily inspired by Sebastian Ramirez ([tiangolo](https://github.com/tiangolo)).  
-Using [Fast-API](https://fastapi.tiangolo.com/) (including [pydantic](https://pydantic-docs.helpmanual.io/)) and [SQLModel](https://sqlmodel.tiangolo.com/). As well as a [typer](https://typer.tiangolo.com/) CLI for the project managment commands.  
 
 ## Dependencies
 
-Dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproject.toml`.  
+Python dependencies are managed via [poetry](https://python-poetry.org/) and a `pyproject.toml`.  
+
+
+## Run
+
+To run the server without docker: `cc up` (assuming you already aliased commands.py, see below ...).  
+You could also just use `docker compose up`.
 
 
 ## Management Commands
@@ -56,7 +60,7 @@ Install dependencies.
     poetry install
 
 Activate your newly created env. (however, you know how to do this on your python)  
-Create a fresh db (you have to redo this for dev-mode too!).
+Create a fresh db (you have to redo this for dev-mode too!).  
 
     alembic upgrade head
 
@@ -76,7 +80,7 @@ To enter develop-mode set an environment-variable.
     $Env:DEBUG_FASTAPI_SKELETON = $true
 
 
-## Models from swagger
+## Import models from any swagger
 
 Pydantic imports generated models from any `swagger.json`: Use the [datamodel-code-generator](https://koxudaxi.github.io/datamodel-code-generator/).
 
@@ -84,7 +88,7 @@ Pydantic imports generated models from any `swagger.json`: Use the [datamodel-co
     datamodel-codegen --input swagger.json --input-file-type openapi --output model.py --target-python-version 3.10
 
 
-## Documentation
+## Automated Documentation
 
 This project uses [mkdocs.org](https://www.mkdocs.org) with [material theme](https://squidfunk.github.io/mkdocs-material/) for documentation.
 
@@ -210,7 +214,13 @@ or: https://alembic.sqlalchemy.org/en/latest/tutorial.html
 and: https://alembic.sqlalchemy.org/en/latest/cookbook.html#don-t-generate-empty-migrations-with-autogenerate  
 
 
-## other skeletons
+## Kudos
+
+This project is heavily inspired by Sebastian Ramirez ([tiangolo](https://github.com/tiangolo)).  
+Using [Fast-API](https://fastapi.tiangolo.com/) (including [pydantic](https://pydantic-docs.helpmanual.io/)) and [SQLModel](https://sqlmodel.tiangolo.com/). As well as a [typer](https://typer.tiangolo.com/) CLI for the project managment commands.  
+
+
+## Other skeletons
 
 [django minimal sqlite](https://github.com/oryon-dominik/skeleton-django-sqlite-minimal)  
 [django with postgres & docker](https://github.com/oryon-dominik/skeleton-django-postgres-docker)  
