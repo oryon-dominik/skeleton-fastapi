@@ -29,6 +29,7 @@ rich = "^10.11.0"
 dill = "^0.3.4"
 pymemcache = "^3.5.0"
 fastapi-utils = "^0.2.1"
+traitlets = "5.1.1"
 
 [tool.poetry.dev-dependencies]
 datamodel-code-generator = "^0.11.12"
